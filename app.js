@@ -1,23 +1,20 @@
-import express from "express";
-import qr from "qr-image";
-import fs from "fs";
+const express = require("express");
+const qr = require("qr-image");
+const fs = require("fs");
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
-// Middleware to parse JSON
 app.use(express.json());
 
-// API to generate QR Code
+// Default route
+app.get("/", (req, res) => {
+    res.send("QR Code Generator API is running!");
+});
+
 app.post("/generate-qr", (req, res) => {
-    const { url } = req.body;
-
-    if (!url) {
-        return res.status(400).json({ error: "URL is required" });
-    }
-
     try {
-        const qr_svg = qr.image(url, { type: "png" });
+        const qr_svg = qr.image(req.body.url, { type: "png" });
         const filePath = `qr_img_${Date.now()}.png`;
 
         const stream = fs.createWriteStream(filePath);
