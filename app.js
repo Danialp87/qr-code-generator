@@ -1,6 +1,6 @@
-const express = require("express");
-const qr = require("qr-image");
-const fs = require("fs");
+import express from "express";
+import qr from "qr-image";
+import fs from "fs";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
